@@ -5,11 +5,10 @@ export const config = {
   runtime: "edge",
 };
 
-export default async function handler(request, context) {
+export default async function handler(request) {
   const url = new URL(request.url);
 
-  // Use the environment variable from Vercel
-  const upstreamUrl = `${context.env.TARGET_DOMAIN}${url.pathname}${url.search}`;
+  const upstreamUrl = `${process.env.TARGET_DOMAIN}${url.pathname}${url.search}`;
 
   // Copy headers, skip forbidden ones
   const forwardHeaders = new Headers();
