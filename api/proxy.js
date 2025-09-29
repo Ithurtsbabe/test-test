@@ -1,5 +1,7 @@
 // api/proxy.js
 
+import { env } from "process";
+
 // Tell Vercel this is an Edge Function
 export const config = {
   runtime: "edge",
