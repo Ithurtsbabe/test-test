@@ -11,7 +11,7 @@ export default async function handler(request) {
 
   // Forward same path + query to your VPS origin
   //const upstreamUrl = `https://za2.zeitvpn.com${url.pathname}${url.search}`;
-  const upstreamUrl = `${process.env.TARGET_DOMAIN}${url.pathname}${url.search}`;
+  const upstreamUrl = `${import.meta.env.TARGET_DOMAIN}${url.pathname}${url.search}`;
 
   // Copy headers, skip forbidden ones
   const forwardHeaders = new Headers();
