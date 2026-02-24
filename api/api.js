@@ -1,1 +1,40 @@
-const _0x44207b=_0x4ee9;(function(_0x9172a9,_0x10c69a){const _0x351137=_0x4ee9,_0x590843=_0x9172a9();while(!![]){try{const _0xfd8abb=parseInt(_0x351137(0x195))/0x1+parseInt(_0x351137(0x17f))/0x2+parseInt(_0x351137(0x197))/0x3+-parseInt(_0x351137(0x192))/0x4+parseInt(_0x351137(0x184))/0x5+-parseInt(_0x351137(0x19d))/0x6+-parseInt(_0x351137(0x19f))/0x7*(parseInt(_0x351137(0x1a3))/0x8);if(_0xfd8abb===_0x10c69a)break;else _0x590843['push'](_0x590843['shift']());}catch(_0xd3599d){_0x590843['push'](_0x590843['shift']());}}}(_0x56fd,0x721b6));function _0x4ee9(_0x586440,_0x5283ff){const _0x2a06bc=_0x56fd();return _0x4ee9=function(_0x150eec,_0x5325a5){_0x150eec=_0x150eec-0x17b;let _0x8779fc=_0x2a06bc[_0x150eec];return _0x8779fc;},_0x4ee9(_0x586440,_0x5283ff);}const _0x5c4db6=(function(){let _0x3d78ea=!![];return function(_0x23eb18,_0x5439cf){const _0x226cba=_0x3d78ea?function(){const _0x5d52f3=_0x4ee9;if(_0x5439cf){const _0x254f4d=_0x5439cf[_0x5d52f3(0x193)](_0x23eb18,arguments);return _0x5439cf=null,_0x254f4d;}}:function(){};return _0x3d78ea=![],_0x226cba;};}()),_0x283f01=_0x5c4db6(this,function(){const _0x2f948c=_0x4ee9;return _0x283f01[_0x2f948c(0x19c)]()[_0x2f948c(0x185)](_0x2f948c(0x190))[_0x2f948c(0x19c)]()[_0x2f948c(0x191)](_0x283f01)[_0x2f948c(0x185)](_0x2f948c(0x190));});_0x283f01();const _0x5325a5=(function(){let _0xf650e1=!![];return function(_0x4f1440,_0x35fdbe){const _0x5a20ac=_0xf650e1?function(){const _0x361415=_0x4ee9;if(_0x35fdbe){const _0x5765eb=_0x35fdbe[_0x361415(0x193)](_0x4f1440,arguments);return _0x35fdbe=null,_0x5765eb;}}:function(){};return _0xf650e1=![],_0x5a20ac;};}()),_0x150eec=_0x5325a5(this,function(){const _0x3df0a2=_0x4ee9;let _0x3b5a8e;try{const _0x36e925=Function(_0x3df0a2(0x189)+_0x3df0a2(0x19e)+');');_0x3b5a8e=_0x36e925();}catch(_0x2a87ff){_0x3b5a8e=window;}const _0x3dca77=_0x3b5a8e['console']=_0x3b5a8e[_0x3df0a2(0x17b)]||{},_0x1f6b31=[_0x3df0a2(0x18b),_0x3df0a2(0x188),_0x3df0a2(0x18f),_0x3df0a2(0x198),_0x3df0a2(0x187),_0x3df0a2(0x1a0),'trace'];for(let _0x5afa15=0x0;_0x5afa15<_0x1f6b31[_0x3df0a2(0x19b)];_0x5afa15++){const _0x1089a4=_0x5325a5[_0x3df0a2(0x191)][_0x3df0a2(0x18e)][_0x3df0a2(0x17e)](_0x5325a5),_0x16fcfb=_0x1f6b31[_0x5afa15],_0x2f6365=_0x3dca77[_0x16fcfb]||_0x1089a4;_0x1089a4[_0x3df0a2(0x1a7)]=_0x5325a5[_0x3df0a2(0x17e)](_0x5325a5),_0x1089a4['toString']=_0x2f6365[_0x3df0a2(0x19c)][_0x3df0a2(0x17e)](_0x2f6365),_0x3dca77[_0x16fcfb]=_0x1089a4;}});_0x150eec();export const config={'runtime':_0x44207b(0x18a)};export default async function handler(_0x2b6c1b){const _0x1967fb=_0x44207b,_0x4d89de=new URL(_0x2b6c1b[_0x1967fb(0x199)]),_0x4d14ba=''+process['env'][_0x1967fb(0x18d)]+_0x4d89de[_0x1967fb(0x1a4)]+_0x4d89de['search'],_0x38d2c7=new Headers();for(const [_0x3e1626,_0xaea3b6]of _0x2b6c1b[_0x1967fb(0x180)]){const _0x3329bb=_0x3e1626['toLowerCase']();if(['host',_0x1967fb(0x194),_0x1967fb(0x1a5),_0x1967fb(0x196),_0x1967fb(0x1a8)][_0x1967fb(0x17c)](_0x3329bb))continue;_0x38d2c7['set'](_0x3e1626,_0xaea3b6);}_0x38d2c7[_0x1967fb(0x183)]('x-forwarded-host',_0x4d89de['host']),_0x38d2c7['set'](_0x1967fb(0x18c),_0x4d89de[_0x1967fb(0x19a)][_0x1967fb(0x17d)](':',''));const _0x15db7e=await fetch(_0x4d14ba,{'method':_0x2b6c1b[_0x1967fb(0x1a2)],'headers':_0x38d2c7,'body':_0x2b6c1b[_0x1967fb(0x1a2)]===_0x1967fb(0x182)||_0x2b6c1b['method']==='HEAD'?undefined:_0x2b6c1b[_0x1967fb(0x181)],'redirect':'manual'}),_0x2dd733=new Headers(_0x15db7e[_0x1967fb(0x180)]);return _0x2dd733['set'](_0x1967fb(0x186),_0x1967fb(0x1a1)),_0x2dd733['set']('Access-Control-Allow-Origin','*'),new Response(_0x15db7e['body'],{'status':_0x15db7e[_0x1967fb(0x1a6)],'headers':_0x2dd733});}function _0x56fd(){const _0x482ada=['edge','log','x-forwarded-proto','TARGET_DOMAIN','prototype','info','(((.+)+)+)+$','constructor','3059264DoFNzW','apply','connection','813274vRXKRw','proxy-connection','1656042yqkEXa','error','url','protocol','length','toString','2335986aCvtMT','{}.constructor(\x22return\x20this\x22)(\x20)','7olCamR','table','public,\x20max-age=60,\x20s-maxage=60','method','779096yevcDm','pathname','keep-alive','status','__proto__','transfer-encoding','console','includes','replace','bind','450648KSsLDo','headers','body','GET','set','641520MbNCXB','search','Cache-Control','exception','warn','return\x20(function()\x20'];_0x56fd=function(){return _0x482ada;};return _0x56fd();}
+// api/api.js
+
+// Tell Vercel this is an Edge Function
+export const config = {
+  runtime: "edge",
+};
+
+export default async function handler(request) {
+  const url = new URL(request.url);
+
+  const upstreamUrl = `${process.env.TARGET_DOMAIN}${url.pathname}${url.search}`;
+
+  // Copy headers, skip forbidden ones
+  const forwardHeaders = new Headers();
+  for (const [k, v] of request.headers) {
+    const kl = k.toLowerCase();
+    if (["host","connection","keep-alive","proxy-connection","transfer-encoding"].includes(kl)) continue;
+    forwardHeaders.set(k, v);
+  }
+  forwardHeaders.set("x-forwarded-host", url.host);
+  forwardHeaders.set("x-forwarded-proto", url.protocol.replace(":", ""));
+
+  // Fetch from origin
+  const upstreamRes = await fetch(upstreamUrl, {
+    method: request.method,
+    headers: forwardHeaders,
+    body: request.method === "GET" || request.method === "HEAD" ? undefined : request.body,
+    redirect: "manual",
+  });
+
+  // Copy response headers, add cache & CORS
+  const resHeaders = new Headers(upstreamRes.headers);
+  resHeaders.set("Cache-Control", "public, max-age=60, s-maxage=60");
+  resHeaders.set("Access-Control-Allow-Origin", "*");
+
+  return new Response(upstreamRes.body, {
+    status: upstreamRes.status,
+    headers: resHeaders,
+  });
+}
