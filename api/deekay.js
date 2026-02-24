@@ -1,1 +1,40 @@
-export const config={'runtime':'edge'};export default async function handler(_0x5221b9){const _0x235e13=new URL(_0x5221b9['url']),_0x4c0f4a=''+process.env.TARGET_DOMAIN+_0x235e13['pathname']+_0x235e13['search'],_0x58fc63=new Headers();for(const [_0x1a47a4,_0x1545e1]of _0x5221b9['headers']){const _0xe1db7=_0x1a47a4['toLowerCase']();if(['host','connection','keep-alive','proxy-connection','transfer-encoding']['includes'](_0xe1db7))continue;_0x58fc63['set'](_0x1a47a4,_0x1545e1);}_0x58fc63['set']('x-forwarded-host',_0x235e13['host']),_0x58fc63['set']('x-forwarded-proto',_0x235e13['protocol']['replace'](':',''));const _0x6b8eb4=await fetch(_0x4c0f4a,{'method':_0x5221b9['method'],'headers':_0x58fc63,'body':_0x5221b9['method']==='GET'||_0x5221b9['method']==='HEAD'?undefined:_0x5221b9['body'],'redirect':'manual'}),_0x5a9655=new Headers(_0x6b8eb4['headers']);return _0x5a9655['set']('Cache-Control','public,\x20max-age=60,\x20s-maxage=60'),_0x5a9655['set']('Access-Control-Allow-Origin','*'),new Response(_0x6b8eb4['body'],{'status':_0x6b8eb4['status'],'headers':_0x5a9655});}
+// api/deekay.js
+
+// Tell Vercel this is an Edge Function
+export const config = {
+  runtime: "edge",
+};
+
+export default async function handler(request) {
+  const url = new URL(request.url);
+
+  const upstreamUrl = `${process.env.TARGET_DOMAIN}${url.pathname}${url.search}`;
+
+  // Copy headers, skip forbidden ones
+  const forwardHeaders = new Headers();
+  for (const [k, v] of request.headers) {
+    const kl = k.toLowerCase();
+    if (["host","connection","keep-alive","proxy-connection","transfer-encoding"].includes(kl)) continue;
+    forwardHeaders.set(k, v);
+  }
+  forwardHeaders.set("x-forwarded-host", url.host);
+  forwardHeaders.set("x-forwarded-proto", url.protocol.replace(":", ""));
+
+  // Fetch from origin
+  const upstreamRes = await fetch(upstreamUrl, {
+    method: request.method,
+    headers: forwardHeaders,
+    body: request.method === "GET" || request.method === "HEAD" ? undefined : request.body,
+    redirect: "manual",
+  });
+
+  // Copy response headers, add cache & CORS
+  const resHeaders = new Headers(upstreamRes.headers);
+  resHeaders.set("Cache-Control", "public, max-age=60, s-maxage=60");
+  resHeaders.set("Access-Control-Allow-Origin", "*");
+
+  return new Response(upstreamRes.body, {
+    status: upstreamRes.status,
+    headers: resHeaders,
+  });
+}
