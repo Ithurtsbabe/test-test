@@ -4,7 +4,8 @@ export const config = {
   runtime: "edge",
 };
 
-// Hardcoded target domain
+// Hardcoded target domain.
+// No trailing slash.
 const TARGET_DOMAIN = "http://germany02.connection-checker.com";
 
 const HOP_BY_HOP_HEADERS = new Set([
@@ -28,6 +29,10 @@ const CORS_HEADERS = {
   "Access-Control-Max-Age": "86400",
 };
 
+function cleanTargetDomain(domain) {
+  return domain.endsWith("/") ? domain.slice(0, -1) : domain;
+}
+
 function jsonResponse(data, status = 200) {
   return new Response(JSON.stringify(data, null, 2), {
     status,
@@ -38,11 +43,7 @@ function jsonResponse(data, status = 200) {
   });
 }
 
-function cleanTargetDomain(domain) {
-  return domain.endsWith("/") ? domain.slice(0, -1) : domain;
-}
-
-function buildForwardHeaders(request, currentUrl, targetUrl) {
+function buildForwardHeaders(request, currentUrl) {
   const headers = new Headers();
 
   for (const [key, value] of request.headers.entries()) {
@@ -58,8 +59,8 @@ function buildForwardHeaders(request, currentUrl, targetUrl) {
   headers.set("x-forwarded-host", currentUrl.host);
   headers.set("x-forwarded-proto", currentUrl.protocol.replace(":", ""));
 
-  // Make upstream see its real host
-  headers.set("host", targetUrl.host);
+  // Do NOT manually set Host on Vercel Edge.
+  // fetch() will set the correct Host based on TARGET_DOMAIN.
 
   return headers;
 }
@@ -89,9 +90,10 @@ function buildResponseHeaders(upstreamRes, currentUrl, targetDomain) {
 
   if (location) {
     try {
+      const targetOrigin = new URL(targetDomain).origin;
       const rewritten = new URL(location, targetDomain);
 
-      if (rewritten.origin === targetDomain) {
+      if (rewritten.origin === targetOrigin) {
         rewritten.protocol = currentUrl.protocol;
         rewritten.host = currentUrl.host;
         headers.set("location", rewritten.toString());
@@ -133,12 +135,49 @@ export default async function handler(request) {
       {
         status: "error",
         message: "Invalid hardcoded TARGET_DOMAIN.",
+        target_domain: targetDomain,
       },
       500
     );
   }
 
-  const forwardHeaders = buildForwardHeaders(request, currentUrl, targetUrl);
+  // Debug endpoint:
+  // Visit: https://your-vercel-domain.vercel.app/__debug
+  if (currentUrl.pathname === "/__debug") {
+    try {
+      const debugUrl = new URL("/", targetDomain);
+
+      const debugRes = await fetch(debugUrl.toString(), {
+        method: "GET",
+        redirect: "manual",
+      });
+
+      const debugBody = await debugRes.text();
+
+      return jsonResponse({
+        status: "success",
+        target: debugUrl.toString(),
+        upstream_status: debugRes.status,
+        upstream_status_text: debugRes.statusText,
+        upstream_headers: Object.fromEntries(debugRes.headers.entries()),
+        upstream_body_preview: debugBody.slice(0, 1500),
+      });
+    } catch (error) {
+      return jsonResponse(
+        {
+          status: "error",
+          message: "Debug fetch failed.",
+          target: targetDomain,
+          error_name: error?.name || null,
+          error_message: error?.message || String(error),
+          error_stack: error?.stack || null,
+        },
+        502
+      );
+    }
+  }
+
+  const forwardHeaders = buildForwardHeaders(request, currentUrl);
 
   try {
     const upstreamRes = await fetch(targetUrl.toString(), {
@@ -178,7 +217,12 @@ export default async function handler(request) {
       {
         status: "error",
         message: "Failed to fetch upstream origin.",
-        details: error?.message || String(error),
+        target: targetUrl?.toString() || null,
+        method: request.method,
+        error_name: error?.name || null,
+        error_message: error?.message || String(error),
+        error_stack: error?.stack || null,
+        hint: "This means Vercel could not reach the origin, the origin closed the connection, or the response type is not supported by Vercel Edge.",
       },
       502
     );
